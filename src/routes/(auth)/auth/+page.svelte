@@ -41,13 +41,18 @@
 			<div class="flex h-full w-full flex-col items-center justify-center p-6">
 				<div class="flex w-full max-w-[350px] flex-col flex-nowrap gap-4">
 					<div class="flex flex-col items-center">
-						<h1 class="text-foreground text-2xl font-semibold">Login/Register</h1>
-						<p class="text-muted-foreground text-sm">Create new or login to your account</p>
+						<h1 class="text-foreground text-2xl font-semibold">Login</h1>
+						<p class="text-muted-foreground text-sm">Login to your account</p>
 					</div>
 					<form class="flex flex-col flex-nowrap gap-2" action="/" method="post">
-						<Input type="text" name="username" placeholder="Username" />
-						<Input type="password" name="password" placeholder="Password" />
-						<Button class="w-full" type="submit">Sign In/Up</Button>
+						<Input type="text" name="username" placeholder="E-Mail" autocomplete="email" />
+						<Input
+							type="password"
+							name="password"
+							placeholder="Password"
+							autocomplete="current-password"
+						/>
+						<Button class="w-full" type="submit">Sign In</Button>
 					</form>
 					<hr class="h-[1px] w-full bg-white" />
 					<Button class="text-foreground w-full" variant="outline">

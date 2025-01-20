@@ -2,10 +2,14 @@
 	import { Button, buttonVariants } from '@/components/ui/button';
 	import { BookText, House, LogIn, Moon, Sun, type Icon } from 'lucide-svelte';
 	import { mode } from '@/mode.svelte';
+	import ModeSwitch from '@/components/ModeSwitch.svelte';
+	import { setContext } from 'svelte';
+	import { writable } from 'svelte/store';
 
 	let { children } = $props();
 
-	let scrollTop: number = $state(0);
+	const scrollTop = writable(0);
+	setContext('scrollTop', scrollTop);
 
 	const menuItems: Array<{ name: string; href: string; icon: typeof Icon }> = [
 		{
@@ -19,13 +23,18 @@
 			icon: BookText
 		}
 	];
+
+	const ghostButtonClassList = buttonVariants({ variant: 'ghost' });
 </script>
 
 <div class="flex h-screen w-full flex-col-reverse md:flex-col">
-	<div class="flex flex-row justify-between gap-8 p-4">
+	<div
+		class="z-10 flex w-full flex-row justify-between gap-8 bg-background/90 p-4 backdrop-blur-md"
+		style={$scrollTop == 0 ? 'border-bottom-width: 0px;' : 'border-bottom-width: 1px;'}
+	>
 		<div class="flex flex-row gap-2">
 			{#each menuItems as item}
-				<a class={buttonVariants({ variant: 'ghost' })} href={item.href}>
+				<a class={ghostButtonClassList} href={item.href}>
 					<div class="md:hidden">
 						<item.icon />
 					</div>
@@ -34,21 +43,14 @@
 			{/each}
 		</div>
 		<div class="flex flex-row gap-2">
-			<a class={buttonVariants({ variant: 'ghost' })} href="/auth"><LogIn />Log in</a>
-			<Button size="icon" variant="ghost" onclick={mode.toggle}>
-				{#if mode.state()}
-					<Moon />
-				{:else}
-					<Sun />
-				{/if}
-			</Button>
+			<a class={ghostButtonClassList} href="/auth"><LogIn />Log in</a>
+			<ModeSwitch variant="ghost" />
 		</div>
 	</div>
 	<main
-		class="border-border flex h-full w-full justify-center overflow-y-scroll scroll-smooth"
-		style={scrollTop == 0 ? 'border-top-width: 0px;' : 'border-top-width: 1px;'}
+		class="flex h-full w-full justify-center overflow-y-scroll scroll-smooth border-border max-md:-mb-[4.5rem] max-md:pb-[4.5rem] md:-mt-[4.5rem] md:pt-[4.5rem]"
 		onscroll={({ target }) => {
-			scrollTop = (target as HTMLElement).scrollTop || 0;
+			scrollTop.set((target as HTMLElement).scrollTop || 0);
 		}}
 	>
 		{@render children()}

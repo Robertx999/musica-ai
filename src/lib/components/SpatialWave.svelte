@@ -14,7 +14,7 @@
 <div
 	class="h-full w-full"
 	onmousemove={({ x }) => {
-		spring_rotation.set((width / 2 - x) / width);
+		spring_rotation.set(0.5 - x / width);
 	}}
 	bind:clientWidth={width}
 >

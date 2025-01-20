@@ -78,15 +78,18 @@
 @layer base {
 	* {
 		@apply border-border;
+		-ms-overflow-style: none;
+		scrollbar-width: none;
 	}
 	html {
 		@apply h-screen w-full;
 	}
 	body {
-		@apply bg-background text-foreground h-screen w-full;
+		@apply h-screen w-full bg-background text-foreground;
 		font-family: 'Geist Sans', sans-serif;
 	}
 	::-webkit-scrollbar {
+		display: none;
 		background: transparent;
 		width: 0.9rem;
 	}
@@ -102,5 +105,8 @@
 	}
 	::-webkit-scrollbar-corner {
 		background: transparent;
+	}
+	::-webkit-scrollbar-button {
+		height: 2.25rem;
 	}
 }
